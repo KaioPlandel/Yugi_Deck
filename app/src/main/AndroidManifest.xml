@@ -10,7 +10,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Compose002">
+        android:theme="@style/Theme.Compose002"
+        android:name=".YugiDeckApplication"
+        >
         <activity
             android:name=".ui.SearchCardActivity"
             android:parentActivityName=".ui.MainActivity"

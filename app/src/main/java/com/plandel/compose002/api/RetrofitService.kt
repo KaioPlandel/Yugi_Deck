@@ -24,17 +24,4 @@ interface RetrofitService {
     @GET("api/v7/cardinfo.php?race=warrior")
     suspend fun getWarriorCards(): Response<Card>
 
-    companion object {
-        private val retrofitService: RetrofitService by lazy {
-            var retrofit = Retrofit.Builder()
-                .baseUrl("https://db.ygoprodeck.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            retrofit.create(RetrofitService::class.java)
-        }
-
-        fun getRetrofitIntance(): RetrofitService {
-            return retrofitService
-        }
-    }
 }

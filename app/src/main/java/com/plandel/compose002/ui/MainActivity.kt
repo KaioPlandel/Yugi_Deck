@@ -5,10 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.plandel.compose002.R
@@ -16,32 +12,27 @@ import com.plandel.compose002.adapter.Adapter
 import com.plandel.compose002.adapter.AdapterPlants
 import com.plandel.compose002.adapter.AdapterReptile
 import com.plandel.compose002.adapter.AdapterWarrior
-import com.plandel.compose002.api.RetrofitService
 import com.plandel.compose002.databinding.ActivityMainBinding
-import com.plandel.compose002.repository.MainRepository
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
+//injenção de dependencias
+//koin
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
-    val retrofit = RetrofitService.getRetrofitIntance()
-    lateinit var viewModel: MainViewModel
-    var adapter = Adapter()
-    var adapter2 = AdapterPlants()
-    var adapterReptile = AdapterReptile()
-    var adapterWarrior = AdapterWarrior()
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModel()
+    private var adapter = Adapter()
+    private var adapter2 = AdapterPlants()
+    private var adapterReptile = AdapterReptile()
+    private var adapterWarrior = AdapterWarrior()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this, MainViewModelFactory(MainRepository(retrofit))).get(
-            MainViewModel::class.java
-        )
-
         setupRecyclerView()
         setupObservers()
     }
-
     override fun onStart() {
         super.onStart()
         viewModel.listDinosaurCards()
@@ -51,21 +42,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.dinousaurCards.observe(this, Observer {
+        viewModel.dinossaurCards.observe(this) {
             adapter.setData(it)
-        })
+        }
 
-        viewModel.plantCards.observe(this, Observer {
+        viewModel.plantCards.observe(this) {
             adapter2.setData(it)
-        })
+        }
 
-        viewModel.reptileCards.observe(this, Observer {
+        viewModel.reptileCards.observe(this) {
             adapterReptile.setData(it)
-        })
+        }
 
-        viewModel.warriorCard.observe(this, Observer {
+        viewModel.warriorCard.observe(this) {
             adapterWarrior.setData(it)
-        })
+        }
     }
 
     private fun setupRecyclerView() {
@@ -88,7 +79,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
     }
@@ -99,4 +91,5 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

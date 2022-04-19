@@ -2,7 +2,7 @@ package com.plandel.compose002.repository
 
 import com.plandel.compose002.api.RetrofitService
 
-class MainRepository constructor(private val retrofitService: RetrofitService) {
+class MainRepository (private val retrofitService: RetrofitService) {
 
     suspend fun getAllCards() = retrofitService.getAllCards()
 

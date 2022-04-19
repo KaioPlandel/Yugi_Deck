@@ -9,9 +9,11 @@ import com.plandel.compose002.databinding.ActivityAboutCardBinding
 
 class AboutCardActivity : AppCompatActivity() {
     lateinit var binding: ActivityAboutCardBinding
+
     companion object {
         var count = 2
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAboutCardBinding.inflate(layoutInflater)
@@ -25,10 +27,10 @@ class AboutCardActivity : AppCompatActivity() {
     private fun setubListeners() {
         binding.buttonSave.setOnClickListener {
             Log.d("TAG", "onCreate: " + count)
-            if(saveCard(count)){
+            if (saveCard(count)) {
                 count++
                 binding.buttonSave.setImageResource(R.drawable.ic_baseline_done_24)
-            }else {
+            } else {
                 count++
                 binding.buttonSave.setImageResource(R.drawable.ic_baseline_add_24)
             }
@@ -43,7 +45,7 @@ class AboutCardActivity : AppCompatActivity() {
             .into(binding.saveCard)
     }
 
-    private fun saveCard(number: Int):Boolean{
+    private fun saveCard(number: Int): Boolean {
         return number % 2 == 0
     }
 
