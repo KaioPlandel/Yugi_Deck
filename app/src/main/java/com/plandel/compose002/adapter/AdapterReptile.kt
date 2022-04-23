@@ -9,14 +9,15 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.plandel.compose002.R
-import com.plandel.compose002.ui.AboutCardActivity
+import com.plandel.compose002.model.CardImage
+import com.plandel.compose002.ui.aboutCard.AboutCardActivity
 
 class AdapterReptile : RecyclerView.Adapter<AdapterReptile.MyViewHolder>() {
 
-    var listImages: List<String> = emptyList()
+    private var listImages: List<CardImage> = emptyList()
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var image = itemView.findViewById<ImageView>(R.id.photoReptile)
+        var image: ImageView = itemView.findViewById(R.id.photoReptile)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -24,10 +25,10 @@ class AdapterReptile : RecyclerView.Adapter<AdapterReptile.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        var card = listImages[position]
+        val card = listImages[position]
         holder.itemView.apply {
             Glide.with(this)
-                .load(card)
+                .load(card.image_url)
                 .into(holder.image)
         }
 
@@ -42,7 +43,7 @@ class AdapterReptile : RecyclerView.Adapter<AdapterReptile.MyViewHolder>() {
         return listImages.size
     }
 
-    fun setData(lista: List<String>){
+    fun setData(lista: List<CardImage>){
         listImages = lista
         Log.d("TAG", "setData: " + listImages.size)
         notifyDataSetChanged()

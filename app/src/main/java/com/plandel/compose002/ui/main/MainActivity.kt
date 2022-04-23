@@ -1,4 +1,4 @@
-package com.plandel.compose002.ui
+package com.plandel.compose002.ui.main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -13,12 +13,12 @@ import com.plandel.compose002.adapter.AdapterPlants
 import com.plandel.compose002.adapter.AdapterReptile
 import com.plandel.compose002.adapter.AdapterWarrior
 import com.plandel.compose002.databinding.ActivityMainBinding
+import com.plandel.compose002.ui.myDeck.MyDeckActivity
+import com.plandel.compose002.ui.search.SearchCardActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-//injenção de dependencias
-//koin
-
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModel()
     private var adapter = Adapter()
@@ -29,31 +29,28 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
         setupRecyclerView()
         setupObservers()
-    }
-    override fun onStart() {
-        super.onStart()
-        viewModel.listDinosaurCards()
-        viewModel.listPlantCards()
-        viewModel.listReptileCards()
-        viewModel.listWarriorCards()
+
+        binding.buttonMyDeck.setOnClickListener {
+            Intent(this, MyDeckActivity::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 
     private fun setupObservers() {
         viewModel.dinossaurCards.observe(this) {
             adapter.setData(it)
         }
-
         viewModel.plantCards.observe(this) {
             adapter2.setData(it)
         }
-
         viewModel.reptileCards.observe(this) {
             adapterReptile.setData(it)
         }
-
         viewModel.warriorCard.observe(this) {
             adapterWarrior.setData(it)
         }
@@ -79,7 +76,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
@@ -91,5 +87,4 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 }

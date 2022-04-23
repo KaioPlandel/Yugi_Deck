@@ -1,4 +1,4 @@
-package com.plandel.compose002.ui
+package com.plandel.compose002.ui.search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

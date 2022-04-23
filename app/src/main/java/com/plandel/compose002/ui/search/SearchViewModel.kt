@@ -1,9 +1,10 @@
-package com.plandel.compose002.ui
+package com.plandel.compose002.ui.search
 
 import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.plandel.compose002.model.CardImage
 import com.plandel.compose002.model.Data
 import com.plandel.compose002.repository.MainRepository
 import kotlinx.coroutines.Dispatchers
@@ -13,9 +14,9 @@ import kotlinx.coroutines.withContext
 
 class SearchViewModel (private val repository: MainRepository) : ViewModel() {
 
-    private val _allCards = MutableLiveData<List<String>>()
-    val allCards: LiveData<List<String>> get() = _allCards
-    var yugiList = mutableListOf<String>()
+    private val _allCards = MutableLiveData<List<CardImage>>()
+    val allCards: LiveData<List<CardImage>> get() = _allCards
+    var yugiList = mutableListOf<CardImage>()
     var status = MutableLiveData<Boolean>()
     var listSearch = mutableListOf<Data>()
 
@@ -28,7 +29,7 @@ class SearchViewModel (private val repository: MainRepository) : ViewModel() {
                     response.body()?.data?.forEach {
                         listSearch.add(it)
                         it.card_images.forEach { cardImage ->
-                            yugiList.add(cardImage.image_url)
+                            yugiList.add(cardImage)
                         }
                     }
                     _allCards.postValue(yugiList)
@@ -52,7 +53,7 @@ class SearchViewModel (private val repository: MainRepository) : ViewModel() {
         listSearch.forEach {
             if(it.name.contains(output)){
                 it.card_images.forEach { cardImage ->
-                    yugiList.add(cardImage.image_url)
+                    yugiList.add(cardImage)
                 }
             }
         }

@@ -2,10 +2,7 @@ package com.plandel.compose002.api
 
 import com.plandel.compose002.model.Card
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 
 interface RetrofitService {
 
